@@ -1,0 +1,7 @@
+﻿services:
+  wolfremium.cli:
+    image: wolfremium.cli
+    build:
+      context: .
+      dockerfile: Wolfremium.Cli/Dockerfile
+
