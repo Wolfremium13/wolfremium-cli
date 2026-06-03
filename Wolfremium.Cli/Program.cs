@@ -184,7 +184,12 @@ public class Program
                 AnsiConsole.WriteLine();
                 if (backupResult.Success)
                 {
-                    var successPanel = new Panel(new Markup($"[bold #21d789]✔ SUCCESS[/]\n\n{backupResult.Message}"))
+                    var fileUri = $"file:///{Path.GetFullPath(_config.ExportPath).Replace('\\', '/')}";
+                    var successMessage = $"[bold #21d789]✔ SUCCESS[/]\n\n" +
+                                         $"{backupResult.Message}\n\n" +
+                                         $"[bold #21d789]Link to Backup:[/] [link={fileUri}]{Markup.Escape(_config.ExportPath)}[/]";
+
+                    var successPanel = new Panel(new Markup(successMessage))
                         .BorderColor(Color.FromHex("#21d789"))
                         .Header("[bold #21d789]Backup Session Completed[/]")
                         .Padding(1, 1, 1, 1);

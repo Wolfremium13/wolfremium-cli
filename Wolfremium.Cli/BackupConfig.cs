@@ -10,7 +10,12 @@ public class BackupConfig
     public string Username { get; set; } = "postgres";
     public string Password { get; set; } = "mysecretpassword";
     public string Database { get; set; } = "wolfremium_dev";
-    public string ExportPath { get; set; } = Path.Combine(Path.GetTempPath(), "backup.sql"); // Default to system temp folder
+    private string? _exportPath;
+    public string ExportPath
+    {
+        get => _exportPath ?? Path.Combine(Path.GetTempPath(), $"{Host}_{DateTime.Now:yyyy-MM-dd}_backup.sql");
+        set => _exportPath = value;
+    }
 
     public static BackupConfig LoadFromEnv()
     {
