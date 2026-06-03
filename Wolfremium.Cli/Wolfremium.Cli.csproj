@@ -12,6 +12,14 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Include="..\compose.yaml">
+        <Link>compose.yaml</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Npgsql" Version="10.0.3" />
+      <PackageReference Include="Spectre.Console" Version="0.55.2" />
     </ItemGroup>
 
 </Project>

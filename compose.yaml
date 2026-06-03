@@ -1,7 +1,37 @@
-﻿services:
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: wolfremium-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: wolfremium_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+
   wolfremium.cli:
     image: wolfremium.cli
     build:
       context: .
       dockerfile: Wolfremium.Cli/Dockerfile
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=mysecretpassword
+      - DB_NAME=wolfremium_dev
+      - BACKUP_PATH=/backups/backup.dump
+      - USE_DOCKER=false # Within the CLI container, run pg_dump directly (since it is local to it)
+    volumes:
+      - ./backups:/backups
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
 
+volumes:
+  postgres_data:
